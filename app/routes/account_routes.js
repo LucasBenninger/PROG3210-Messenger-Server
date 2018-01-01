@@ -21,4 +21,18 @@ module.exports = function(app, db){
             res.send({"error":"Username and password Cannot be Null"});
         }
     });
+
+    app.get('/account/:id', (req, res) =>{
+        const id = req.params.id;
+        const account ={
+            '_id':new ObjectId(id)
+        };
+        db.collection('accounts').findOne(account, (err, result) =>{
+            if(err){
+                res.send({'error':'An Error Occured'});
+            }else{
+                res.send(REFUSED.ops[0]);
+            }
+        })
+    })
 }
