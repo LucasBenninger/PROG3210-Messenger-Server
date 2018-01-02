@@ -43,8 +43,8 @@ module.exports = function (app, db) {
                         var registrationToken = item.firebase;
                         var payload = {
                             notification: {
-                                title: "Test",
-                                body: "test1"
+                                title: message.sender,
+                                body: message.content
                             }
                         };
 
