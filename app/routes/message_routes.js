@@ -1,6 +1,6 @@
 var ObjectId = require('mongodb').ObjectID;
 const firebase = require('firebase-messaging');
-var client = new firebase('AAAAgJ9DTFM:APA91bHfTPF94XlM1lwN0kkzu3DVBdq0-6ceRGd3c9UzrZqORDv_d0_2yqbOJ4cA_L7IggZwMkZJ8jkKguOs18xxy_3c244Gx_Lplj5g9KA3EoXhxHq1CtBfSAbpsRPYdeHMmJeGYjwJ');
+var client = new firebase('AIzaSyDOivkK0hH-FihJZkjkoUy05JQxMMSvbw4');
 
 module.exports = function(app, db){
 
