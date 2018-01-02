@@ -37,6 +37,7 @@ module.exports = function(app, db){
                     if(err){
                         console.log("Can't find username");
                     }else{
+                        console.log("Attempting to send firebase message to "+item.username);
                         client.message(item.firebase, data);
                     }
                 });
