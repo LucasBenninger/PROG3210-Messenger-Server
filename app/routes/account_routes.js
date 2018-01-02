@@ -13,15 +13,23 @@ module.exports = function(app, db){
         console.log("Received Account Creation Request of:\n"+JSON.stringify(credentials));
         //Don't continue if nothing provided...
         if(credentials.username != null && credentials.password != null){
-            db.collection('accounts').insert(credentials, (err, result) =>{
-                if(err){
-                    res.send({'error':'An Error Occured'});
+            db.collection('accounts').findOne({username:credentials.username}, (err, account) =>{
+                if(account){
+                    //Account Exists
+                    res.send({'error':'Username already in use!'});
                 }else{
-                    res.send(result.ops[0]);
+                    //Add Account
+                    db.collection('accounts').insert(credentials, (err, result) =>{
+                        if(err){
+                            res.send({'error':'An Error Occured'});
+                        }else{
+                            res.send(result.ops[0]);
+                        }
+                    });
                 }
             });
         }else{
-            res.send({"error":"Username and password Cannot be Null: "+credentials.username+" : "+credentials.password});
+            res.send({"error":"Username and or password cannot be blank"});
         }
     });
 

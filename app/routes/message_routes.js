@@ -25,6 +25,20 @@ module.exports = function (app, db) {
         })
     });
 
+    app.get('/message/get/:receiver', (req, res) =>{
+        const receiver = req.params.receiver;
+        const message ={
+            'receiver' : receiver
+        };
+        db.collection('messages').find(message, (err, items) => {
+            if(err){
+                res.send({'error':'No Messages Found'});
+            }else if(items){
+                res.send(items);
+            }
+        });
+    });
+
     app.post('/message/send', (req, res) => {
         const message = {
             sender: req.body.sender,
