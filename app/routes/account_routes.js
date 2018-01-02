@@ -1,4 +1,5 @@
 var ObjectId = require('mongodb').ObjectID;
+const bodyParser = require('body-parser');
 
 module.exports = function(app, db){
 
