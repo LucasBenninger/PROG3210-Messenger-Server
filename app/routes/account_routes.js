@@ -3,15 +3,11 @@ var ObjectId = require('mongodb').ObjectID;
 module.exports = function(app, db){
 
     app.post('/account/create', (req, res) =>{
-        console.log(req.body.username);
-        console.log(req.body.password);
-        console.log(req.body.firebase);
         const credentials ={
             'username' : req.body.username,
             'password' : req.body.password,
             'firebase' : req.body.firebase
         };
-        console.log(req);
         console.log("Received Account Creation Request of:\n"+JSON.stringify(credentials));
         //Don't continue if nothing provided...
         if(credentials.username != null && credentials.password != null){
