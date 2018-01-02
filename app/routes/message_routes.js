@@ -5,8 +5,8 @@ var admin = require("firebase-admin");
 var serviceAccount = require("../../config/prog3210-messenger-firebase-adminsdk-hpi6d-af8adea128.json");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://prog3210-messenger.firebaseio.com"
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://prog3210-messenger.firebaseio.com"
 });
 
 module.exports = function (app, db) {
@@ -25,16 +25,16 @@ module.exports = function (app, db) {
         })
     });
 
-    app.get('/message/get/:receiver', (req, res) =>{
+    app.get('/message/get/:receiver', (req, res) => {
         const receiver = req.params.receiver;
-        const message ={
-            'receiver' : receiver
+        const message = {
+            'receiver': receiver
         };
-        db.collection('messages').find(message, (err, items) => {
-            if(err){
-                res.send({'error':'No Messages Found'});
-            }else if(items){
-                res.send(items);
+        db.collection('messages').find(message).toArray(function (error, messages) {
+            if (error) {
+                res.send({ 'error': 'An error occured' });
+            } else {
+                res.send(messages);
             }
         });
     });
@@ -53,25 +53,26 @@ module.exports = function (app, db) {
                     if (err) {
                         console.log("Can't find username");
                     } else {
-                        //Send Notification
-                        var registrationToken = item.firebase;
-                        var payload = {
-                            notification: {
-                                title: message.sender,
-                                body: message.content
-                            }
-                        };
+                        if (item) {
+                            //Send Notification
+                            var registrationToken = item.firebase;
+                            var payload = {
+                                notification: {
+                                    title: message.sender,
+                                    body: message.content
+                                }
+                            };
 
-                        admin.messaging().sendToDevice(registrationToken, payload)
-                            .then(function (response) {
-                                // See the MessagingDevicesResponse reference documentation for
-                                // the contents of response.
-                                console.log("Successfully sent message:", response);
-                            })
-                            .catch(function (error) {
-                                console.log("Error sending message:", error);
-                            });
-
+                            admin.messaging().sendToDevice(registrationToken, payload)
+                                .then(function (response) {
+                                    // See the MessagingDevicesResponse reference documentation for
+                                    // the contents of response.
+                                    console.log("Successfully sent message:", response);
+                                })
+                                .catch(function (error) {
+                                    console.log("Error sending message:", error);
+                                });
+                        }
                     }
                 });
                 res.send(result.ops[0]);
