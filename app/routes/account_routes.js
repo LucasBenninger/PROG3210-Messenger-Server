@@ -18,7 +18,7 @@ module.exports = function(app, db){
                 }
             });
         }else{
-            res.send({"error":"Username and password Cannot be Null"});
+            res.send({"error":"Username and password Cannot be Null","username":username,"password":password});
         }
     });
 
