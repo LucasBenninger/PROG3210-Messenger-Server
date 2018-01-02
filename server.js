@@ -3,6 +3,17 @@ const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 const dbURL = require('./config/db');
 
+
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./config/prog3210-messenger-firebase-adminsdk-hpi6d-af8adea128.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://prog3210-messenger.firebaseio.com"
+});
+
+
 const app = express();
 app.use(bodyParser.json({extended : true}));
 const port = 8000;
