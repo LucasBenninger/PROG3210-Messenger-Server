@@ -1,4 +1,6 @@
 var ObjectId = require('mongodb').ObjectID;
+const firebase = require('firebase-messaging');
+var client = new firebase('AIzaSyBcvIAYSYfYg1bhaJTiH1YVooOxSTWIEPg');
 
 module.exports = function(app, db){
 
@@ -22,10 +24,22 @@ module.exports = function(app, db){
             receiver:req.body.receiver,
             content:req.body.content
         };
+
+        var data = {
+            title: message.sender,
+            content: message.collection
+        }
         db.collection('messages').insert(message, (err, result) =>{
             if(err){
                 res.send({'error':'An Error Occured'});
             }else{
+                db.collection('accounts').findOne({username:message.receiver}, (err, item) =>{
+                    if(err){
+                        console.log("Can't find username");
+                    }else{
+                        client.message(item.firebase, data);
+                    }
+                });
                 res.send(result.ops[0]);
             }
         })
