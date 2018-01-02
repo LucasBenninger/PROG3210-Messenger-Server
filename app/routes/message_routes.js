@@ -1,5 +1,14 @@
 var ObjectId = require('mongodb').ObjectID;
 
+var admin = require("firebase-admin");
+
+var serviceAccount = require("../../config/prog3210-messenger-firebase-adminsdk-hpi6d-af8adea128.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://prog3210-messenger.firebaseio.com"
+});
+
 module.exports = function (app, db) {
 
     app.get('/message/:id', (req, res) => {
