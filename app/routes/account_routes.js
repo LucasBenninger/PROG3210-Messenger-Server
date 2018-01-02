@@ -4,11 +4,10 @@ module.exports = function(app, db){
 
     app.post('/account/create', (req, res) =>{
         const credentials ={
-            username : req.body.username,
-            password : req.body.password,
-            firebase : req.body.firebase
+            'username' : req.body.username,
+            'password' : req.body.password,
+            'firebase' : req.body.firebase
         };
-        console.log(req.params.username);
         console.log("Received Account Creation Request of:\n"+JSON.stringify(credentials));
         //Don't continue if nothing provided...
         if(credentials.username != null && credentials.password != null){
