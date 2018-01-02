@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 module.exports = function(app, db){
 
     app.post('/account/create', (req, res) =>{
-        req = bodyParser.json(req);
         console.log("Body:\n"+JSON.stringify(req.body));
         const credentials ={
             'username' : req.body.username,
