@@ -75,6 +75,7 @@ module.exports = function (app, db) {
                         }
                     }
                 });
+                console.log("sending message" + result.ops[0]);
                 res.send(result.ops[0]);
             }
         })

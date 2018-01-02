@@ -16,6 +16,7 @@ module.exports = function(app, db){
             db.collection('accounts').findOne({username:credentials.username}, (err, account) =>{
                 if(account){
                     //Account Exists
+                    console.log('Error: Username already in use!');
                     res.send({'error':'Username already in use!'});
                 }else{
                     //Add Account
@@ -23,6 +24,7 @@ module.exports = function(app, db){
                         if(err){
                             res.send({'error':'An Error Occured'});
                         }else{
+                            console.log("Creating account: "+credentials.username);
                             res.send(result.ops[0]);
                         }
                     });
