@@ -3,7 +3,7 @@ var ObjectId = require('mongodb').ObjectID;
 module.exports = function(app, db){
 
     app.post('/account/create', (req, res) =>{
-        console.log(req.body);
+        console.log("Body:\n"+req.body);
         const credentials ={
             'username' : req.body.username,
             'password' : req.body.password,
