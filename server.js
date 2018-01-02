@@ -3,8 +3,8 @@ const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 const dbURL = require('./config/db');
 
-
 const app = express();
+app.use(bodyParser.json({extended : true}));
 const port = 8000;
 
 app.use(bodyParser.urlencoded({extended:true}));
