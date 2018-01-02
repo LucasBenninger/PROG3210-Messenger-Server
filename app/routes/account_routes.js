@@ -2,14 +2,14 @@ var ObjectId = require('mongodb').ObjectID;
 
 module.exports = function(app, db){
 
-    app.get('/account/create', (req, res) =>{
+    app.post('/account/create', (req, res) =>{
         const credentials ={
-            _id : req.body.username,
+            username : req.body.username,
             password : req.body.password,
             firebase : req.body.firebase
         };
         //Don't continue if nothing provided...
-        if(credentials._id != null && credentials.password != null){
+        if(credentials.username != null && credentials.password != null){
             db.collection('accounts').insert(credentials, (err, result) =>{
                 if(err){
                     res.send({'error':'An Error Occured'});
@@ -22,17 +22,18 @@ module.exports = function(app, db){
         }
     });
 
-    app.get('/account/:id', (req, res) =>{
-        const id = req.params.id;
+    app.get('/account/:username', (req, res) =>{
+        const username = req.params.username;
+        console.log("looking for "+username);
         const account ={
-            '_id':new ObjectId(id)
+            'username' : username
         };
         db.collection('accounts').findOne(account, (err, result) =>{
             if(err){
                 res.send({'error':'An Error Occured'});
             }else{
-                res.send(REFUSED.ops[0]);
+                res.send(result);
             }
         })
-    })
+    });
 }
